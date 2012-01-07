@@ -2,11 +2,12 @@
 //  ViewController.m
 //  DMBannerView
 //
-//  Created by Don Milham on 1/6/12.
-//  Copyright (c) 2012 Seek Mobile Interactive. All rights reserved.
+//  Created by @donmilham on 1/7/12.
 //
 
 #import "ViewController.h"
+
+#import "DMBannerView.h"
 
 @implementation ViewController
 
@@ -53,12 +54,54 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-	    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-	} else {
-	    return YES;
+	return YES;
+}
+
+static DMBannerView * topBanner = nil;
+static DMBannerView * bottomBanner = nil;
+
+- (IBAction) topPressed:(id)sender {
+	if (topBanner == nil) {
+		topBanner = [[DMBannerView alloc] initWithDisplayMode:DM_BANNER_VIEW_DISPLAY_MODE_TOP];
+		topBanner.heightAdjustment = 20.0f; // adjust for the status bar
+		self.view.autoresizesSubviews = YES;
+		[self.view addSubview:topBanner];
 	}
+	
+	UIView * newView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 64)] autorelease];
+	newView.autoresizesSubviews = YES;
+	newView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	newView.backgroundColor = [UIColor grayColor];
+	
+	UILabel * label = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 64)] autorelease];
+	label.text = @"Top Banner";
+	label.textAlignment = UITextAlignmentCenter;
+	label.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	[newView addSubview:label];
+	
+	[topBanner queueView:newView withDuration:2.0f];
+}
+
+- (IBAction) bottomPressed:(id)sender {
+	if (bottomBanner == nil) {
+		bottomBanner = [[DMBannerView alloc] initWithDisplayMode:DM_BANNER_VIEW_DISPLAY_MODE_BOTTOM];
+		bottomBanner.heightAdjustment = 20.0f; // adjust for the status bar
+		self.view.autoresizesSubviews = YES;
+		[self.view addSubview:bottomBanner];
+	}
+	
+	UIView * newView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 64)] autorelease];
+	newView.autoresizesSubviews = YES;
+	newView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	newView.backgroundColor = [UIColor grayColor];
+	
+	UILabel * label = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 64)] autorelease];
+	label.text = @"Bottom Banner";
+	label.textAlignment = UITextAlignmentCenter;
+	label.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	[newView addSubview:label];
+	
+	[bottomBanner queueView:newView withDuration:2.0f];
 }
 
 @end
